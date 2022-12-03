@@ -1,6 +1,5 @@
 /* Drew Schuster */
 import java.awt.*;
-import javax.imageio.*;
 import javax.swing.JPanel;
 import java.lang.Math;
 import java.util.*;
@@ -400,7 +399,6 @@ class Ghost extends Mover
   { 
     int random;
     char backwards='U';
-    int newX=x,newY=y;
     int lookX=x,lookY=y;
     Set<Character> set = new HashSet<Character>();
     switch(direction)
@@ -430,8 +428,6 @@ class Ghost extends Mover
         break;
       }
 
-      newX=x;
-      newY=y;
       lookX=x;
       lookY=y;
       
@@ -440,25 +436,21 @@ class Ghost extends Mover
       if (random == 1)
       {
         newDirection = 'L';
-        newX-=increment; 
         lookX-= increment;
       }
       else if (random == 2)
       {
         newDirection = 'R';
-        newX+=increment; 
         lookX+= gridSize;
       }
       else if (random == 3)
       {
         newDirection = 'U';
-        newY-=increment; 
         lookY-=increment;
       }
       else if (random == 4)
       {
         newDirection = 'D';
-        newY+=increment; 
         lookY+=gridSize;
       }
       if (newDirection != backwards)
@@ -510,7 +502,7 @@ public class Board extends JPanel
 {
   /* Initialize the images*/
   /* For JAR File*/
-  /*
+
   Image pacmanImage = Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/pacman.jpg"));
   Image pacmanUpImage = Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/pacmanup.jpg")); 
   Image pacmanDownImage = Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/pacmandown.jpg")); 
@@ -527,25 +519,8 @@ public class Board extends JPanel
   Image titleScreenImage = Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/titleScreen.jpg")); 
   Image gameOverImage = Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/gameOver.jpg")); 
   Image winScreenImage = Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/winScreen.jpg"));
-  */
-  /* For NOT JAR file*/
-  Image pacmanImage = Toolkit.getDefaultToolkit().getImage("img/pacman.jpg"); 
-  Image pacmanUpImage = Toolkit.getDefaultToolkit().getImage("img/pacmanup.jpg"); 
-  Image pacmanDownImage = Toolkit.getDefaultToolkit().getImage("img/pacmandown.jpg"); 
-  Image pacmanLeftImage = Toolkit.getDefaultToolkit().getImage("img/pacmanleft.jpg"); 
-  Image pacmanRightImage = Toolkit.getDefaultToolkit().getImage("img/pacmanright.jpg"); 
-  Image ghost10 = Toolkit.getDefaultToolkit().getImage("img/ghost10.jpg"); 
-  Image ghost20 = Toolkit.getDefaultToolkit().getImage("img/ghost20.jpg"); 
-  Image ghost30 = Toolkit.getDefaultToolkit().getImage("img/ghost30.jpg"); 
-  Image ghost40 = Toolkit.getDefaultToolkit().getImage("img/ghost40.jpg"); 
-  Image ghost11 = Toolkit.getDefaultToolkit().getImage("img/ghost11.jpg"); 
-  Image ghost21 = Toolkit.getDefaultToolkit().getImage("img/ghost21.jpg"); 
-  Image ghost31 = Toolkit.getDefaultToolkit().getImage("img/ghost31.jpg"); 
-  Image ghost41 = Toolkit.getDefaultToolkit().getImage("img/ghost41.jpg"); 
-  Image titleScreenImage = Toolkit.getDefaultToolkit().getImage("img/titleScreen.jpg"); 
-  Image gameOverImage = Toolkit.getDefaultToolkit().getImage("img/gameOver.jpg"); 
-  Image winScreenImage = Toolkit.getDefaultToolkit().getImage("img/winScreen.jpg");
 
+ 
   /* Initialize the player and ghosts */
   Player player = new Player(200,300);
   Ghost ghost1 = new Ghost(180,180);
