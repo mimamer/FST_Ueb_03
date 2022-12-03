@@ -73,10 +73,11 @@ public class Pacman implements MouseListener, KeyListener
     b.repaint(0,0,600,20);
     b.repaint(0,420,600,40);
     b.repaint(b.player.x-20,b.player.y-20,80,80);
-    b.repaint(b.ghost1.x-20,b.ghost1.y-20,80,80);
-    b.repaint(b.ghost2.x-20,b.ghost2.y-20,80,80);
-    b.repaint(b.ghost3.x-20,b.ghost3.y-20,80,80);
-    b.repaint(b.ghost4.x-20,b.ghost4.y-20,80,80);
+    
+    for(Ghost ghost:b.ghosts) {
+    	b.repaint(ghost.x-20,ghost.y-20,80,80);
+    }
+    
   }
 
   /* Steps the screen forward one frame */
@@ -157,15 +158,15 @@ public class Pacman implements MouseListener, KeyListener
       }
 
       /* Also move the ghosts, and update the pellet states */
-      b.ghost1.move(); 
-      b.ghost2.move(); 
-      b.ghost3.move(); 
-      b.ghost4.move(); 
+      for(Ghost ghost:b.ghosts) {
+    	  ghost.move(); 
+      }
+      
       b.player.updatePellet();
-      b.ghost1.updatePellet();
-      b.ghost2.updatePellet();
-      b.ghost3.updatePellet();
-      b.ghost4.updatePellet();
+      
+      for(Ghost ghost:b.ghosts) {
+    	  ghost.updatePellet(); 
+      }
     }
 
     /* We either have a new game or the user has died, either way we have to reset the board */
@@ -187,14 +188,15 @@ public class Pacman implements MouseListener, KeyListener
       b.player.desiredDirection='L';
       b.player.x = 200;
       b.player.y = 300;
-      b.ghost1.x = 180;
-      b.ghost1.y = 180;
-      b.ghost2.x = 200;
-      b.ghost2.y = 180;
-      b.ghost3.x = 220;
-      b.ghost3.y = 180;
-      b.ghost4.x = 220;
-      b.ghost4.y = 180;
+      
+      b.ghosts[0].x = 180;
+      b.ghosts[0].y = 180;
+      b.ghosts[1].x = 200;
+      b.ghosts[1].y = 180;
+      b.ghosts[2].x = 220;
+      b.ghosts[2].y = 180;
+      b.ghosts[3].x = 220;
+      b.ghosts[3].y = 180;
 
       /* Advance a frame to display main state*/
       b.repaint(0,0,600,600);
