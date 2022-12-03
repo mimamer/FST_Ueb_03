@@ -12,11 +12,7 @@ public class Board extends JPanel
   /* Initialize the images*/
   /* For JAR File*/
 
-  Image pacmanImage = Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/pacman.jpg"));
-  Image pacmanUpImage = Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/pacmanup.jpg")); 
-  Image pacmanDownImage = Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/pacmandown.jpg")); 
-  Image pacmanLeftImage = Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/pacmanleft.jpg")); 
-  Image pacmanRightImage = Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/pacmanright.jpg")); 
+
   Image ghost10 = Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/ghost10.jpg")); 
   Image ghost20 = Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/ghost20.jpg")); 
   Image ghost30 = Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/ghost30.jpg")); 
@@ -360,7 +356,7 @@ public class Board extends JPanel
       sounds.nomNomStop();
 
       /* Draw the pacman */
-      g.drawImage(pacmanImage,player.x,player.y,Color.BLACK,null);
+      g.drawImage(player.pacmanImage,player.x,player.y,Color.BLACK,null);
       g.setColor(Color.BLACK);
       
       /* Kill the pacman */
@@ -670,7 +666,7 @@ public class Board extends JPanel
     if (player.frameCount < 5)
     {
       /* Draw mouth closed */
-      g.drawImage(pacmanImage,player.x,player.y,Color.BLACK,null);
+      g.drawImage(player.pacmanImage,player.x,player.y,Color.BLACK,null);
     }
     else
     {
@@ -681,16 +677,16 @@ public class Board extends JPanel
       switch(player.currDirection)
       {
         case 'L':
-           g.drawImage(pacmanLeftImage,player.x,player.y,Color.BLACK,null);
+           g.drawImage(player.pacmanLeftImage,player.x,player.y,Color.BLACK,null);
            break;     
         case 'R':
-           g.drawImage(pacmanRightImage,player.x,player.y,Color.BLACK,null);
+           g.drawImage(player.pacmanRightImage,player.x,player.y,Color.BLACK,null);
            break;     
         case 'U':
-           g.drawImage(pacmanUpImage,player.x,player.y,Color.BLACK,null);
+           g.drawImage(player.pacmanUpImage,player.x,player.y,Color.BLACK,null);
            break;     
         case 'D':
-           g.drawImage(pacmanDownImage,player.x,player.y,Color.BLACK,null);
+           g.drawImage(player.pacmanDownImage,player.x,player.y,Color.BLACK,null);
            break;     
       }
     }
