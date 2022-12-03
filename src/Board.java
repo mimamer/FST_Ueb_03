@@ -12,15 +12,6 @@ public class Board extends JPanel
   /* Initialize the images*/
   /* For JAR File*/
 
-
-  Image ghost10 = Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/ghost10.jpg")); 
-  Image ghost20 = Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/ghost20.jpg")); 
-  Image ghost30 = Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/ghost30.jpg")); 
-  Image ghost40 = Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/ghost40.jpg")); 
-  Image ghost11 = Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/ghost11.jpg")); 
-  Image ghost21 = Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/ghost21.jpg")); 
-  Image ghost31 = Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/ghost31.jpg")); 
-  Image ghost41 = Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/ghost41.jpg")); 
   Image titleScreenImage = Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/titleScreen.jpg")); 
   Image gameOverImage = Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/gameOver.jpg")); 
   Image winScreenImage = Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/winScreen.jpg"));
@@ -28,10 +19,10 @@ public class Board extends JPanel
  
   /* Initialize the player and ghosts */
   Player player = new Player(200,300);
-  Ghost ghost1 = new Ghost(180,180);
-  Ghost ghost2 = new Ghost(200,180);
-  Ghost ghost3 = new Ghost(220,180);
-  Ghost ghost4 = new Ghost(220,180);
+  Ghost ghost1 = new Ghost(180,180,1);
+  Ghost ghost2 = new Ghost(200,180,2);
+  Ghost ghost3 = new Ghost(220,180,3);
+  Ghost ghost4 = new Ghost(220,180,4);
 
   /* Timer is used for playing sound effects and animations */
   long timer = System.currentTimeMillis();
@@ -466,10 +457,10 @@ public class Board extends JPanel
     {
       reset();
       player = new Player(200,300);
-      ghost1 = new Ghost(180,180);
-      ghost2 = new Ghost(200,180);
-      ghost3 = new Ghost(220,180);
-      ghost4 = new Ghost(220,180);
+      ghost1 = new Ghost(180,180,1);
+      ghost2 = new Ghost(200,180,2);
+      ghost3 = new Ghost(220,180,3);
+      ghost4 = new Ghost(220,180,4);
       currScore = 0;
       drawBoard(g);
       drawPellets(g);
@@ -643,19 +634,19 @@ public class Board extends JPanel
     if (ghost1.frameCount < 5)
     {
       /* Draw first frame of ghosts */
-      g.drawImage(ghost10,ghost1.x,ghost1.y,Color.BLACK,null);
-      g.drawImage(ghost20,ghost2.x,ghost2.y,Color.BLACK,null);
-      g.drawImage(ghost30,ghost3.x,ghost3.y,Color.BLACK,null);
-      g.drawImage(ghost40,ghost4.x,ghost4.y,Color.BLACK,null);
+      g.drawImage(ghost1.ghost_right,ghost1.x,ghost1.y,Color.BLACK,null);
+      g.drawImage(ghost2.ghost_right,ghost2.x,ghost2.y,Color.BLACK,null);
+      g.drawImage(ghost3.ghost_right,ghost3.x,ghost3.y,Color.BLACK,null);
+      g.drawImage(ghost4.ghost_right,ghost4.x,ghost4.y,Color.BLACK,null);
       ghost1.frameCount++;
     }
     else
     {
       /* Draw second frame of ghosts */
-      g.drawImage(ghost11,ghost1.x,ghost1.y,Color.BLACK,null);
-      g.drawImage(ghost21,ghost2.x,ghost2.y,Color.BLACK,null);
-      g.drawImage(ghost31,ghost3.x,ghost3.y,Color.BLACK,null);
-      g.drawImage(ghost41,ghost4.x,ghost4.y,Color.BLACK,null);
+      g.drawImage(ghost1.ghost_right,ghost1.x,ghost1.y,Color.BLACK,null);
+      g.drawImage(ghost2.ghost_right,ghost2.x,ghost2.y,Color.BLACK,null);
+      g.drawImage(ghost3.ghost_right,ghost3.x,ghost3.y,Color.BLACK,null);
+      g.drawImage(ghost4.ghost_right,ghost4.x,ghost4.y,Color.BLACK,null);
       if (ghost1.frameCount >=10)
         ghost1.frameCount=0;
       else
