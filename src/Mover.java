@@ -36,9 +36,9 @@ class Mover
   /* Updates the state information */
   public void updateState(boolean[][] state)
   {
-    for(int i =0;i<20;i++)
+    for(int i =0;i<state.length;i++)
     {
-      for(int j=0;j<20;j++)
+      for(int j=0;j<state.length;j++)
       {
         this.state[i][j] = state[i][j];
       }
