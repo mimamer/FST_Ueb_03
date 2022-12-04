@@ -37,15 +37,13 @@ class Player extends Mover {
 
 	/* Constructor places pacman in initial location and orientation */
 	public Player(int x, int y, Board board) {
-		this.board = board;
+		super(x,y,board);
+
 		teleport = false;
 		pelletsEaten = 0;
 		pelletX = x / gridSize - 1;
 		pelletY = y / gridSize - 1;
-		this.lastX = x;
-		this.lastY = y;
-		this.x = x;
-		this.y = y;
+
 		currDirection = 'L';
 		desiredDirection = 'L';
 	}

@@ -12,8 +12,7 @@ class Ghost extends Mover {
 	char direction;
 
 	/* Last ghost location */
-	int lastX;
-	int lastY;
+
 
 	/* The pellet the ghost is on top of */
 	int pelletX, pelletY;
@@ -23,16 +22,13 @@ class Ghost extends Mover {
 
 	/* Constructor places ghost and updates states */
 	public Ghost(int x, int y, int photo_id, Board board) {
+		super(x,y,board);
 		direction = 'L';
 		pelletX = x / gridSize - 1;
 		pelletY = x / gridSize - 1;
 		lastPelletX = pelletX;
 		lastPelletY = pelletY;
-		this.lastX = x;
-		this.lastY = y;
-		this.x = x;
-		this.y = y;
-		this.board = board;
+
 		// try-catch
 		ghost_right = Toolkit.getDefaultToolkit()
 				.getImage(Pacman.class.getResource("img/ghost" + (photo_id) + "0.jpg"));
