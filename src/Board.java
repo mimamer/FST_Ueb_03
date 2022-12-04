@@ -249,27 +249,24 @@ public class Board extends JPanel {
 		g.fillOval(x * 20 + 28, y * 20 + 28, 4, 4);
 	}
 
-	/* This is the main function that draws one entire frame of the game, gameloop */
+	/*
+	 * This is the main function that draws one entire frame of the game, gameloop
+	 */
 	public void paint(Graphics graphics) {
-		/*
-		 * If we're playing the dying animation, don't update the entire screen. Just
-		 * kill the pacman
-		 */
+
 		if (dying > 0) {
 			dying_sequence(graphics);
 			return;
 		}
 
-		/* If this is the title screen, draw the title screen and return */
 		if (titleScreen) {
-			setScreen(graphics,titleScreenImage);
+			setScreen(graphics, titleScreenImage);
 			return;
-		}
-		else if (winScreen) {
-			setScreen(graphics,winScreenImage);
+		} else if (winScreen) {
+			setScreen(graphics, winScreenImage);
 			return;
-		}else if(overScreen) {
-			setScreen(graphics,gameOverImage);
+		} else if (overScreen) {
+			setScreen(graphics, gameOverImage);
 			return;
 		}
 
@@ -277,16 +274,11 @@ public class Board extends JPanel {
 		if (clearHighScores) {
 			graphics.setColor(Color.BLACK);
 			graphics.fillRect(0, 0, 600, 18);
-			graphics.setColor(Color.YELLOW);
-			graphics.setFont(font);
+			
 			clearHighScores = false;
-			if (demo)
-				graphics.drawString("DEMO MODE PRESS ANY KEY TO START A GAME\t High Score: " + highScore, 20, 10);
-			else
-				graphics.drawString("Score: " + (currScore) + "\t High Score: " + highScore, 20, 10);
+			draw_header(graphics);
+			
 		}
-
-
 
 		/* Game initialization */
 		if (New == 1) {
@@ -305,12 +297,7 @@ public class Board extends JPanel {
 			/* Send the game map to player and all ghosts */
 
 			/* Draw the top menu bar */
-			graphics.setColor(Color.YELLOW);
-			graphics.setFont(font);
-			if (demo)
-				graphics.drawString("DEMO MODE PRESS ANY KEY TO START A GAME\t High Score: " + highScore, 20, 10);
-			else
-				graphics.drawString("Score: " + (currScore) + "\t High Score: " + highScore, 20, 10);
+			draw_header(graphics);
 			New++;
 		}
 		/* Second frame of new game */
@@ -345,7 +332,6 @@ public class Board extends JPanel {
 		/* Detect collisions */
 
 		boolean collision_detected = detect_collision();
-		
 
 		/* Kill the pacman */
 		if (collision_detected && !stopped) {
@@ -375,32 +361,13 @@ public class Board extends JPanel {
 		}
 
 		/* Eat pellets */
+		
 		if (pellets[player.pelletX][player.pelletY] && New != 2 && New != 3) {
-			lastPelletEatenX = player.pelletX;
-			lastPelletEatenY = player.pelletY;
-
-			/* Play eating sound */
-			sounds.nomNom();
-
-			/* Increment pellets eaten value to track for end game */
-			player.pelletsEaten++;
-
-			/* Delete the pellet */
-			pellets[player.pelletX][player.pelletY] = false;
-
-			/* Increment the score */
-			currScore += 50;
-
+			
+			pellet_handing();
 			/* Update the screen to reflect the new score */
-			graphics.setColor(Color.BLACK);
-			graphics.fillRect(0, 0, 600, 20);
-			graphics.setColor(Color.YELLOW);
-			graphics.setFont(font);
-			if (demo)
-				graphics.drawString("DEMO MODE PRESS ANY KEY TO START A GAME\t High Score: " + highScore, 20, 10);
-			else
-				graphics.drawString("Score: " + (currScore) + "\t High Score: " + highScore, 20, 10);
-
+			score_gui_update(graphics);
+			
 			/* If this was the last pellet */
 			if (player.pelletsEaten == 173) {
 				/* Demo mode can't get a high score */
@@ -480,6 +447,39 @@ public class Board extends JPanel {
 		graphics.setColor(Color.WHITE);
 		graphics.drawRect(19, 19, 382, 382);
 
+	}
+
+	private void draw_header(Graphics graphics) {
+		graphics.setColor(Color.YELLOW);
+		graphics.setFont(font);
+		if (demo)
+			graphics.drawString("DEMO MODE PRESS ANY KEY TO START A GAME\t High Score: " + highScore, 20, 10);
+		else
+			graphics.drawString("Score: " + (currScore) + "\t High Score: " + highScore, 20, 10);
+	}
+
+	private void score_gui_update(Graphics graphics) {
+		graphics.setColor(Color.BLACK);
+		graphics.fillRect(0, 0, 600, 20);
+		draw_header(graphics);
+
+	}
+
+	private void pellet_handing() {
+		lastPelletEatenX = player.pelletX;
+		lastPelletEatenY = player.pelletY;
+
+		/* Play eating sound */
+		sounds.nomNom();
+
+		/* Increment pellets eaten value to track for end game */
+		player.pelletsEaten++;
+
+		/* Delete the pellet */
+		pellets[player.pelletX][player.pelletY] = false;
+
+		/* Increment the score */
+		currScore += 50;
 	}
 
 	private void dying_sequence(Graphics graphics) {
