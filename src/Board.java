@@ -37,15 +37,12 @@ public class Board extends JPanel {
 	 */
 	int dying = 0;
 
-	/* Score information */
-	int currScore;
-	int highScore;
+	HighScore highscore;
 
 	/*
 	 * if the high scores have been cleared, we have to update the top of the screen
 	 * to reflect that
 	 */
-	boolean clearHighScores = false;
 
 	int numLives = 2;
 
@@ -75,9 +72,10 @@ public class Board extends JPanel {
 
 	/* Constructor initializes state flags etc. */
 	public Board() {
-		initHighScores();
+		highscore = new HighScore();
+		highscore.initHighScores();
 		sounds = new GameSounds();
-		currScore = 0;
+		highscore.currScore = 0;
 		stopped = false;
 		max = 400;
 		board_Size = 19;
@@ -127,44 +125,6 @@ public class Board extends JPanel {
 		ghosts[1] = new Ghost(200, 180, 2, this);
 		ghosts[2] = new Ghost(220, 180, 3, this);
 		ghosts[3] = new Ghost(220, 180, 4, this);
-	}
-
-	/* Reads the high scores file and saves it */
-	public void initHighScores() {
-		File file = new File("highScores.txt");
-		Scanner sc;
-		try {
-			sc = new Scanner(file);
-			highScore = sc.nextInt();
-			sc.close();
-		} catch (Exception e) {
-		}
-	}
-
-	/* Writes the new high score to a file and sets flag to update it on screen */
-	public void updateScore(int score) {
-		PrintWriter out;
-		try {
-			out = new PrintWriter("highScores.txt");
-			out.println(score);
-			out.close();
-		} catch (Exception e) {
-		}
-		highScore = score;
-		clearHighScores = true;
-	}
-
-	/* Wipes the high scores file and sets flag to update it on screen */
-	public void clearHighScores() {
-		PrintWriter out;
-		try {
-			out = new PrintWriter("highScores.txt");
-			out.println("0");
-			out.close();
-		} catch (Exception e) {
-		}
-		highScore = 0;
-		clearHighScores = true;
 	}
 
 	/* Reset occurs on a new game */
@@ -271,13 +231,13 @@ public class Board extends JPanel {
 		}
 
 		/* If need to update the high scores, redraw the top menu bar */
-		if (clearHighScores) {
+		if (highscore.clearHighScores) {
 			graphics.setColor(Color.BLACK);
 			graphics.fillRect(0, 0, 600, 18);
-			
-			clearHighScores = false;
+
+			highscore.clearHighScores = false;
 			draw_header(graphics);
-			
+
 		}
 
 		/* Game initialization */
@@ -287,7 +247,7 @@ public class Board extends JPanel {
 
 			initialize_ghost();
 
-			currScore = 0;
+			highscore.currScore = 0;
 
 			initialize_pellets_and_state();
 			drawBoard(graphics);
@@ -361,19 +321,21 @@ public class Board extends JPanel {
 		}
 
 		/* Eat pellets */
-		
+
 		if (pellets[player.pelletX][player.pelletY] && New != 2 && New != 3) {
-			
+
 			pellet_handing();
 			/* Update the screen to reflect the new score */
-			score_gui_update(graphics);
-			
+			graphics.setColor(Color.BLACK);
+			graphics.fillRect(0, 0, 600, 20);
+			draw_header(graphics);
+
 			/* If this was the last pellet */
 			if (player.pelletsEaten == 173) {
 				/* Demo mode can't get a high score */
 				if (!demo) {
-					if (currScore > highScore) {
-						updateScore(currScore);
+					if (highscore.currScore > highscore.highScore) {
+						highscore.updateScore(highscore.currScore);
 					}
 					winScreen = true;
 				} else {
@@ -453,16 +415,9 @@ public class Board extends JPanel {
 		graphics.setColor(Color.YELLOW);
 		graphics.setFont(font);
 		if (demo)
-			graphics.drawString("DEMO MODE PRESS ANY KEY TO START A GAME\t High Score: " + highScore, 20, 10);
+			graphics.drawString("DEMO MODE PRESS ANY KEY TO START A GAME\t High Score: " + highscore.highScore, 20, 10);
 		else
-			graphics.drawString("Score: " + (currScore) + "\t High Score: " + highScore, 20, 10);
-	}
-
-	private void score_gui_update(Graphics graphics) {
-		graphics.setColor(Color.BLACK);
-		graphics.fillRect(0, 0, 600, 20);
-		draw_header(graphics);
-
+			graphics.drawString("Score: " + (highscore.currScore) + "\t High Score: " + highscore.highScore, 20, 10);
 	}
 
 	private void pellet_handing() {
@@ -479,7 +434,7 @@ public class Board extends JPanel {
 		pellets[player.pelletX][player.pelletY] = false;
 
 		/* Increment the score */
-		currScore += 50;
+		highscore.currScore += 50;
 	}
 
 	private void dying_sequence(Graphics graphics) {
@@ -523,8 +478,8 @@ public class Board extends JPanel {
 						numLives = 2;
 					else {
 						/* Game over for player. If relevant, update high score. Set gameOver flag */
-						if (currScore > highScore) {
-							updateScore(currScore);
+						if (highscore.currScore > highscore.highScore) {
+							highscore.updateScore(highscore.currScore);
 						}
 						overScreen = true;
 					}

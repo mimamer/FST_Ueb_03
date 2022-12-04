@@ -281,7 +281,7 @@ public class Pacman implements MouseListener, KeyListener
       else if (180 <= x && x <= 300)
       {
         /* Clear high scores has been clicked */
-        board.clearHighScores();
+        board.highscore.clearHighScores();
       }
       else if (350 <= x && x <= 420)
       {
