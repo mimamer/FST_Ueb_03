@@ -249,62 +249,14 @@ public class Board extends JPanel {
 		g.fillOval(x * 20 + 28, y * 20 + 28, 4, 4);
 	}
 
-	/* This is the main function that draws one entire frame of the game */
-
+	/* This is the main function that draws one entire frame of the game, gameloop */
 	public void paint(Graphics graphics) {
 		/*
 		 * If we're playing the dying animation, don't update the entire screen. Just
 		 * kill the pacman
 		 */
 		if (dying > 0) {
-			/* Stop any pacman eating sounds */
-			sounds.nomNomStop();
-
-			/* Draw the pacman */
-			graphics.drawImage(player.pacmanImage, player.x, player.y, Color.BLACK, null);
-			graphics.setColor(Color.BLACK);
-
-			/* Kill the pacman */
-			if (dying == 4)
-				graphics.fillRect(player.x, player.y, 20, 7);
-			else if (dying == 3)
-				graphics.fillRect(player.x, player.y, 20, 14);
-			else if (dying == 2)
-				graphics.fillRect(player.x, player.y, 20, 20);
-			else if (dying == 1) {
-				graphics.fillRect(player.x, player.y, 20, 20);
-			}
-
-			/*
-			 * Take .1 seconds on each frame of death, and then take 2 seconds for the final
-			 * frame to allow for the sound effect to end
-			 */
-			long currTime = System.currentTimeMillis();
-			long temp;
-			if (dying != 1)
-				temp = 100;
-			else
-				temp = 2000;
-			/* If it's time to draw a new death frame... */
-			if (currTime - timer >= temp) {
-				dying--;
-				timer = currTime;
-				/* If this was the last death frame... */
-				if (dying == 0) {
-					if (numLives == -1) {
-						/* Demo mode has infinite lives, just give it more lives */
-						if (demo)
-							numLives = 2;
-						else {
-							/* Game over for player. If relevant, update high score. Set gameOver flag */
-							if (currScore > highScore) {
-								updateScore(currScore);
-							}
-							overScreen = true;
-						}
-					}
-				}
-			}
+			dying_sequence(graphics);
 			return;
 		}
 
@@ -528,6 +480,57 @@ public class Board extends JPanel {
 		graphics.setColor(Color.WHITE);
 		graphics.drawRect(19, 19, 382, 382);
 
+	}
+
+	private void dying_sequence(Graphics graphics) {
+		/* Stop any pacman eating sounds */
+		sounds.nomNomStop();
+
+		/* Draw the pacman */
+		graphics.drawImage(player.pacmanImage, player.x, player.y, Color.BLACK, null);
+		graphics.setColor(Color.BLACK);
+
+		/* Kill the pacman */
+		if (dying == 4)
+			graphics.fillRect(player.x, player.y, 20, 7);
+		else if (dying == 3)
+			graphics.fillRect(player.x, player.y, 20, 14);
+		else if (dying == 2)
+			graphics.fillRect(player.x, player.y, 20, 20);
+		else if (dying == 1) {
+			graphics.fillRect(player.x, player.y, 20, 20);
+		}
+
+		/*
+		 * Take .1 seconds on each frame of death, and then take 2 seconds for the final
+		 * frame to allow for the sound effect to end
+		 */
+		long currTime = System.currentTimeMillis();
+		long temp;
+		if (dying != 1)
+			temp = 100;
+		else
+			temp = 2000;
+		/* If it's time to draw a new death frame... */
+		if (currTime - timer >= temp) {
+			dying--;
+			timer = currTime;
+			/* If this was the last death frame... */
+			if (dying == 0) {
+				if (numLives == -1) {
+					/* Demo mode has infinite lives, just give it more lives */
+					if (demo)
+						numLives = 2;
+					else {
+						/* Game over for player. If relevant, update high score. Set gameOver flag */
+						if (currScore > highScore) {
+							updateScore(currScore);
+						}
+						overScreen = true;
+					}
+				}
+			}
+		}
 	}
 
 	private boolean detect_collision() {

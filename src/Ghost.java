@@ -11,9 +11,6 @@ class Ghost extends Mover {
 	/* Direction ghost is heading */
 	char direction;
 
-	/* Last ghost location */
-
-
 	/* The pellet the ghost is on top of */
 	int pelletX, pelletY;
 
