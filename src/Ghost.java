@@ -15,9 +15,6 @@ class Ghost extends Mover {
 	int lastX;
 	int lastY;
 
-	/* Current ghost location */
-	int x;
-	int y;
 
 	/* The pellet the ghost is on top of */
 	int pelletX, pelletY;
@@ -55,13 +52,7 @@ class Ghost extends Mover {
 
 	}
 
-	/* Determines if the location is one where the ghost has to make a decision */
-	public boolean isChoiceDest() {
-		if (x % gridSize == 0 && y % gridSize == 0) {
-			return true;
-		}
-		return false;
-	}
+
 
 	/* Chooses a new direction randomly for the ghost to move */
 	public char newDirection() {

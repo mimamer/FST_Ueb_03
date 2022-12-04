@@ -25,9 +25,7 @@ class Player extends Mover {
 	int lastX;
 	int lastY;
 
-	/* Current location */
-	int x;
-	int y;
+
 
 	/* Which pellet the pacman is on top of */
 	int pelletX;
@@ -113,16 +111,7 @@ class Player extends Mover {
 		return newDirection;
 	}
 
-	/*
-	 * This function is used for demoMode. It is copied from the Ghost class. See
-	 * that for comments
-	 */
-	public boolean isChoiceDest() {
-		if (x % gridSize == 0 && y % gridSize == 0) {
-			return true;
-		}
-		return false;
-	}
+
 
 	/*
 	 * This function is used for demoMode. It is copied from the Ghost class. See
