@@ -219,96 +219,16 @@ public class Board extends JPanel {
 		graphics.drawRect(19, 19, 382, 382);
 		graphics.setColor(Color.BLUE);
 		
-		
-		graphics.fillRect(40, 40, 60, 20);
-		
-		graphics.fillRect(120, 40, 60, 20);
-		
-		graphics.fillRect(200, 20, 20, 40);
-		
-		graphics.fillRect(240, 40, 60, 20);
-		
-		graphics.fillRect(320, 40, 60, 20);
-		
-		graphics.fillRect(40, 80, 60, 20);
-		
-		graphics.fillRect(160, 80, 100, 20);
-		
-		graphics.fillRect(200, 80, 20, 60);
-		
-		graphics.fillRect(320, 80, 60, 20);
-		
-
-		graphics.fillRect(20, 120, 80, 60);
-		
-		graphics.fillRect(320, 120, 80, 60);
-		
-		graphics.fillRect(20, 200, 80, 60);
-		
-		graphics.fillRect(320, 200, 80, 60);
-		
-
-		graphics.fillRect(160, 160, 40, 20);
-		
-		graphics.fillRect(220, 160, 40, 20);
-		
-		graphics.fillRect(160, 180, 20, 20);
-		
-		graphics.fillRect(160, 200, 100, 20);
-		
-		graphics.fillRect(240, 180, 20, 20);
-		
-		graphics.setColor(Color.BLUE);
-
-		graphics.fillRect(120, 120, 60, 20);
-		
-		graphics.fillRect(120, 80, 20, 100);
-		
-		graphics.fillRect(280, 80, 20, 100);
-		
-		graphics.fillRect(240, 120, 60, 20);
-		
-
-		graphics.fillRect(280, 200, 20, 60);
-		
-		graphics.fillRect(120, 200, 20, 60);
-		
-		graphics.fillRect(160, 240, 100, 20);
-		
-		graphics.fillRect(200, 260, 20, 40);
-		
-
-		graphics.fillRect(120, 280, 60, 20);
-		
-		graphics.fillRect(240, 280, 60, 20);
-		
-
-		graphics.fillRect(40, 280, 60, 20);
-		
-		graphics.fillRect(80, 280, 20, 60);
-		
-		graphics.fillRect(320, 280, 60, 20);
-		
-		graphics.fillRect(320, 280, 20, 60);
-		
-
-		graphics.fillRect(20, 320, 40, 20);
-		
-		graphics.fillRect(360, 320, 40, 20);
-		
-		graphics.fillRect(160, 320, 100, 20);
-		
-		graphics.fillRect(200, 320, 20, 60);
-		
-
-		graphics.fillRect(40, 360, 140, 20);
-		
-		graphics.fillRect(240, 360, 140, 20);
-		
-		graphics.fillRect(280, 320, 20, 40);
-
-		graphics.fillRect(120, 320, 20, 60);
-
+		int field_size=20; //quadratic
+		int oberer_reiter=20;
+		int seiten_margin=20;
+		for(int column=0; column<initial_state.length;column++) {
+			for(int row=0; row<initial_state.length;row++) {
+				if(initial_state[column][row]==Field_type.WALL) {
+					graphics.fillRect(column*field_size+seiten_margin, row*field_size+oberer_reiter, field_size, field_size);
+				}
+			}
+		}
 		drawLives(graphics);
 	}
 
