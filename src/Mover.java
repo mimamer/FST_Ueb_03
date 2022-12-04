@@ -23,10 +23,10 @@ class Mover
     gridSize=20;
     increment = 4;
     max = 400;
-    state = new boolean[20][20];
-    for(int i =0;i<20;i++)
+    state = new boolean[19][19];
+    for(int i =0;i<state.length;i++)
     {
-      for(int j=0;j<20;j++)
+      for(int j=0;j<state.length;j++)
       {
         state[i][j] = false;
       }
