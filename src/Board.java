@@ -50,7 +50,7 @@ public class Board extends JPanel {
 	int numLives = 2;
 
 	/* Contains the game map, passed to player and ghosts */
-	boolean[][] state;
+	boolean[][] walls;
 
 	/* Contains the state of all pellets */
 	boolean[][] pellets;
@@ -100,12 +100,12 @@ public class Board extends JPanel {
 	}
 
 	private void initialize_pellets_and_state() {
-		state=new boolean[gridSize][gridSize];
+		walls=new boolean[gridSize][gridSize];
 		pellets=new boolean[gridSize][gridSize];
 		for(int row=0; row<initial_state.length;row++) {
 			for(int column=0; column<initial_state.length;column++) {
 				pellets[row][column]=initial_state[row][column]==Field_type.PELLET?true:false;
-				state[row][column]=initial_state[row][column]==Field_type.WALL?false:true;
+				walls[row][column]=initial_state[row][column]==Field_type.WALL?false:true;
 			}
 		}
 		
@@ -173,27 +173,7 @@ public class Board extends JPanel {
 	/* Reset occurs on a new game */
 	public void reset() {
 		numLives = 2;
-		state = new boolean[19][19];
-		pellets = new boolean[19][19];
-
-		/* Clear state and pellets arrays */
-		for (int i = 0; i < state.length; i++) {
-			for (int j = 0; j < state.length; j++) {
-				state[i][j] = true;
-				pellets[i][j] = true;
-			}
-		}
-
-		/* Handle the weird spots with no pellets */
-		for (int i = 5; i < 14; i++) {
-			for (int j = 5; j < 12; j++) {
-				pellets[i][j] = false;
-			}
-		}
-		pellets[9][7] = false;
-		pellets[8][8] = false;
-		pellets[9][8] = false;
-		pellets[10][8] = false;
+		initialize_pellets_and_state();
 
 	}
 
@@ -476,12 +456,12 @@ public class Board extends JPanel {
 			drawPellets(g);
 			drawLives(g);
 			/* Send the game map to player and all ghosts */
-			player.updateState(state);
+			player.updateState(walls);
 			/* Don't let the player go in the ghost box */
 			player.state[9][7] = false;
 
 			for (Ghost ghost : ghosts) {
-				ghost.updateState(state);
+				ghost.updateState(walls);
 			}
 
 			/* Draw the top menu bar */
