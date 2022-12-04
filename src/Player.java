@@ -37,7 +37,7 @@ class Player extends Mover {
 
 	/* Constructor places pacman in initial location and orientation */
 	public Player(int x, int y, Board board) {
-		super(x,y,board);
+		super(x, y, board);
 
 		teleport = false;
 		pelletsEaten = 0;
@@ -52,7 +52,6 @@ class Player extends Mover {
 	 * This function is used for demoMode. It is copied from the Ghost class. See
 	 * that for comments
 	 */
-	
 
 	/*
 	 * This function is used for demoMode. It is copied from the Ghost class. See

@@ -8,8 +8,6 @@ class Ghost extends Mover {
 	Image ghost_right;
 	Image ghost_left;
 
-
-
 	/* The pellet the ghost is on top of */
 	int pelletX, pelletY;
 
@@ -18,7 +16,7 @@ class Ghost extends Mover {
 
 	/* Constructor places ghost and updates states */
 	public Ghost(int x, int y, int photo_id, Board board) {
-		super(x,y,board);
+		super(x, y, board);
 		direction = 'L';
 		pelletX = x / gridSize - 1;
 		pelletY = x / gridSize - 1;
@@ -44,8 +42,6 @@ class Ghost extends Mover {
 		}
 
 	}
-
-	
 
 	/* Random move function for ghost */
 	public void move() {

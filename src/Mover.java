@@ -10,7 +10,7 @@ class Mover {
 	char direction;
 	int lastX;
 	int lastY;
-	
+
 	Board board;
 	/* State contains the game map */
 
@@ -53,6 +53,7 @@ class Mover {
 		}
 		return false;
 	}
+
 	public char newDirection() {
 		int random;
 		char backwards = 'U';
