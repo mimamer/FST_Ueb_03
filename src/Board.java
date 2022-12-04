@@ -3,14 +3,23 @@
 import java.awt.*;
 import javax.swing.JPanel;
 import java.lang.Math;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.io.*;
 
 /*This board class contains the player, ghosts, pellets, and most of the game logic.*/
 public class Board extends JPanel {
+	
+	public enum Field_type{
+		EMPTY, PELLET, WALL
+	}
+	
+	Field_type[][] initial_state;
 	/* Initialize the images */
 	/* For JAR File */
-
+	
 	Image titleScreenImage = Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/titleScreen.jpg"));
 	Image gameOverImage = Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/gameOver.jpg"));
 	Image winScreenImage = Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/winScreen.jpg"));
@@ -74,12 +83,33 @@ public class Board extends JPanel {
 		currScore = 0;
 		stopped = false;
 		max = 400;
-		gridSize = 20;
+		gridSize = 19;
 		New = 0;
 		titleScreen = true;
+		initial_state=new Field_type[gridSize][gridSize];
+		try {
+			String board_info=Files.readString(Paths.get(getClass().getResource("initial_board.txt").toURI()));
+			process_board_info(board_info);
+		} catch (IOException | URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 
 		initialize_ghost();
 
+	}
+
+	private void process_board_info(String board_info) {
+		StringTokenizer st=new StringTokenizer(board_info,"\n");
+		int row=0;
+		while(st.hasMoreTokens()) {
+			String line=st.nextToken();
+			for(int column=0; column<line.length();column++) {
+				char type=line.charAt(column);
+				initial_state[row][column]=type==' '?Field_type.EMPTY:(type==' '?Field_type.PELLET:Field_type.WALL);
+			}
+		}
 	}
 
 	public void initialize_ghost() {
