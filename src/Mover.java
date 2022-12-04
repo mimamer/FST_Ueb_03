@@ -1,3 +1,5 @@
+import java.util.HashSet;
+import java.util.Set;
 
 class Mover {
 	/* Framecount is used to count animation frames */
@@ -5,7 +7,7 @@ class Mover {
 	/* Current location */
 	int x;
 	int y;
-	
+	char direction;
 	int lastX;
 	int lastY;
 	
@@ -50,5 +52,52 @@ class Mover {
 			return true;
 		}
 		return false;
+	}
+	public char newDirection() {
+		int random;
+		char backwards = 'U';
+		int lookX = x, lookY = y;
+		Set<Character> set = new HashSet<Character>();
+		switch (direction) {
+		case 'L':
+			backwards = 'R';
+			break;
+		case 'R':
+			backwards = 'L';
+			break;
+		case 'U':
+			backwards = 'D';
+			break;
+		case 'D':
+			backwards = 'U';
+			break;
+		}
+		char newDirection = backwards;
+		while (newDirection == backwards || !isValidDest(lookX, lookY)) {
+			if (set.size() == 3) {
+				newDirection = backwards;
+				break;
+			}
+			lookX = x;
+			lookY = y;
+			random = (int) (Math.random() * 4) + 1;
+			if (random == 1) {
+				newDirection = 'L';
+				lookX -= increment;
+			} else if (random == 2) {
+				newDirection = 'R';
+				lookX += gridSize;
+			} else if (random == 3) {
+				newDirection = 'U';
+				lookY -= increment;
+			} else if (random == 4) {
+				newDirection = 'D';
+				lookY += gridSize;
+			}
+			if (newDirection != backwards) {
+				set.add(new Character(newDirection));
+			}
+		}
+		return newDirection;
 	}
 }

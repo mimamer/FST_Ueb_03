@@ -8,8 +8,7 @@ class Ghost extends Mover {
 	Image ghost_right;
 	Image ghost_left;
 
-	/* Direction ghost is heading */
-	char direction;
+
 
 	/* The pellet the ghost is on top of */
 	int pelletX, pelletY;
@@ -46,60 +45,7 @@ class Ghost extends Mover {
 
 	}
 
-	/* Chooses a new direction randomly for the ghost to move */
-	public char newDirection() {
-		int random;
-		char backwards = 'U';
-		int lookX = x, lookY = y;
-		Set<Character> set = new HashSet<Character>();
-		switch (direction) {
-		case 'L':
-			backwards = 'R';
-			break;
-		case 'R':
-			backwards = 'L';
-			break;
-		case 'U':
-			backwards = 'D';
-			break;
-		case 'D':
-			backwards = 'U';
-			break;
-		}
-
-		char newDirection = backwards;
-		/* While we still haven't found a valid direction */
-		while (newDirection == backwards || !isValidDest(lookX, lookY)) {
-			/* If we've tried every location, turn around and break the loop */
-			if (set.size() == 3) {
-				newDirection = backwards;
-				break;
-			}
-
-			lookX = x;
-			lookY = y;
-
-			/* Randomly choose a direction */
-			random = (int) (Math.random() * 4) + 1;
-			if (random == 1) {
-				newDirection = 'L';
-				lookX -= increment;
-			} else if (random == 2) {
-				newDirection = 'R';
-				lookX += gridSize;
-			} else if (random == 3) {
-				newDirection = 'U';
-				lookY -= increment;
-			} else if (random == 4) {
-				newDirection = 'D';
-				lookY += gridSize;
-			}
-			if (newDirection != backwards) {
-				set.add(new Character(newDirection));
-			}
-		}
-		return newDirection;
-	}
+	
 
 	/* Random move function for ghost */
 	public void move() {
