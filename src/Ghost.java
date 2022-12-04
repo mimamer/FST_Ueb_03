@@ -5,16 +5,15 @@ import java.util.Set;
 
 class Ghost extends Mover {
 
-	 Image ghost_right; 
-	 Image ghost_left;
-	
+	Image ghost_right;
+	Image ghost_left;
+
 	/* Direction ghost is heading */
 	char direction;
 
 	/* Last ghost location */
 	int lastX;
 	int lastY;
-
 
 	/* The pellet the ghost is on top of */
 	int pelletX, pelletY;
@@ -33,10 +32,11 @@ class Ghost extends Mover {
 		this.lastY = y;
 		this.x = x;
 		this.y = y;
-		this.board=board;
-		//try-catch
-		ghost_right=Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/ghost"+(photo_id)+"0.jpg")); 
-		ghost_left=Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/ghost"+(photo_id)+"1.jpg")); 
+		this.board = board;
+		// try-catch
+		ghost_right = Toolkit.getDefaultToolkit()
+				.getImage(Pacman.class.getResource("img/ghost" + (photo_id) + "0.jpg"));
+		ghost_left = Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/ghost" + (photo_id) + "1.jpg"));
 	}
 
 	/* update pellet status */

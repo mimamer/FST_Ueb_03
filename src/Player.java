@@ -25,8 +25,6 @@ class Player extends Mover {
 	int lastX;
 	int lastY;
 
-
-
 	/* Which pellet the pacman is on top of */
 	int pelletX;
 	int pelletY;
@@ -39,7 +37,7 @@ class Player extends Mover {
 
 	/* Constructor places pacman in initial location and orientation */
 	public Player(int x, int y, Board board) {
-		this.board=board;
+		this.board = board;
 		teleport = false;
 		pelletsEaten = 0;
 		pelletX = x / gridSize - 1;
@@ -59,7 +57,6 @@ class Player extends Mover {
 	public char newDirection() {
 		int random;
 		char backwards = 'U';
-		int newX = x, newY = y;
 		int lookX = x, lookY = y;
 		Set<Character> set = new HashSet<Character>();
 		switch (direction) {
@@ -82,26 +79,20 @@ class Player extends Mover {
 				newDirection = backwards;
 				break;
 			}
-			newX = x;
-			newY = y;
 			lookX = x;
 			lookY = y;
 			random = (int) (Math.random() * 4) + 1;
 			if (random == 1) {
 				newDirection = 'L';
-				newX -= increment;
 				lookX -= increment;
 			} else if (random == 2) {
 				newDirection = 'R';
-				newX += increment;
 				lookX += gridSize;
 			} else if (random == 3) {
 				newDirection = 'U';
-				newY -= increment;
 				lookY -= increment;
 			} else if (random == 4) {
 				newDirection = 'D';
-				newY += increment;
 				lookY += gridSize;
 			}
 			if (newDirection != backwards) {
@@ -110,8 +101,6 @@ class Player extends Mover {
 		}
 		return newDirection;
 	}
-
-
 
 	/*
 	 * This function is used for demoMode. It is copied from the Ghost class. See
@@ -155,7 +144,6 @@ class Player extends Mover {
 
 	/* The move function moves the pacman for one frame in non demo mode */
 	public void move() {
-		int gridSize = 20;
 		lastX = x;
 		lastY = y;
 

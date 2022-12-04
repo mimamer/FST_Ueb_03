@@ -49,14 +49,11 @@ public class Board extends JPanel {
 
 	int numLives = 2;
 
-	/* Contains the game map, passed to player and ghosts */
-	boolean[][] walls;
-
 	/* Contains the state of all pellets */
 	boolean[][] pellets;
 
 	/* Game dimensions */
-	int gridSize;
+	int board_Size;
 	int max;
 
 	/* State flags */
@@ -83,10 +80,10 @@ public class Board extends JPanel {
 		currScore = 0;
 		stopped = false;
 		max = 400;
-		gridSize = 19;
+		board_Size = 19;
 		New = 0;
 		titleScreen = true;
-		initial_state = new Field_type[gridSize][gridSize];
+		initial_state = new Field_type[board_Size][board_Size];
 		try {
 			String board_info = Files.readString(Paths.get(getClass().getResource("initial_board.txt").toURI()));
 			process_board_info(board_info);
@@ -102,12 +99,10 @@ public class Board extends JPanel {
 	}
 
 	private void initialize_pellets_and_state() {
-		walls = new boolean[gridSize][gridSize];
-		pellets = new boolean[gridSize][gridSize];
+		pellets = new boolean[board_Size][board_Size];
 		for (int row = 0; row < initial_state.length; row++) {
 			for (int column = 0; column < initial_state.length; column++) {
 				pellets[row][column] = initial_state[row][column] == Field_type.PELLET ? true : false;
-				walls[row][column] = initial_state[row][column] == Field_type.WALL ? false : true;
 			}
 		}
 
@@ -132,7 +127,6 @@ public class Board extends JPanel {
 		ghosts[1] = new Ghost(200, 180, 2, this);
 		ghosts[2] = new Ghost(220, 180, 3, this);
 		ghosts[3] = new Ghost(220, 180, 4, this);
-
 	}
 
 	/* Reads the high scores file and saves it */
@@ -188,27 +182,27 @@ public class Board extends JPanel {
 		g.setColor(Color.BLACK);
 
 		/* Clear the bottom bar */
-		g.fillRect(0, max + 5, 600, gridSize);
+		g.fillRect(0, max + 5, 600, board_Size);
 		g.setColor(Color.YELLOW);
 		for (int i = 0; i < numLives; i++) {
 			/* Draw each life */
-			g.fillOval(gridSize * (i + 1), max + 5, gridSize, gridSize);
+			g.fillOval(board_Size * (i + 1), max + 5, board_Size, board_Size);
 		}
 		/* Draw the menu items */
 		g.setColor(Color.YELLOW);
 		g.setFont(font);
-		g.drawString("Reset", 100, max + 5 + gridSize);
-		g.drawString("Clear High Scores", 180, max + 5 + gridSize);
-		g.drawString("Exit", 350, max + 5 + gridSize);
+		g.drawString("Reset", 100, max + 5 + board_Size);
+		g.drawString("Clear High Scores", 180, max + 5 + board_Size);
+		g.drawString("Exit", 350, max + 5 + board_Size);
 	}
 
-	/*
-	 * This function draws the board. The pacman board is really complicated and can
-	 * only feasibly be done manually. Whenever I draw a wall, I call updateMap to
-	 * invalidate those coordinates. This way the pacman and ghosts know that they
-	 * can't traverse this area
-	 */
 	public void drawBoard(Graphics graphics) {
+		drawMargins(graphics);
+		drawWalls(graphics);
+		drawLives(graphics);
+	}
+
+	private void drawMargins(Graphics graphics) {
 		graphics.setColor(Color.BLACK);
 		graphics.fillRect(0, 0, 600, 600);
 		graphics.setColor(Color.BLACK);
@@ -220,7 +214,9 @@ public class Board extends JPanel {
 		graphics.setColor(Color.WHITE);
 		graphics.drawRect(19, 19, 382, 382);
 		graphics.setColor(Color.BLUE);
+	}
 
+	private void drawWalls(Graphics graphics) {
 		int field_size = 20; // quadratic
 		int oberer_reiter = 20;
 		int seiten_margin = 20;
@@ -232,7 +228,6 @@ public class Board extends JPanel {
 				}
 			}
 		}
-		drawLives(graphics);
 	}
 
 	/* Draws the pellets on the screen */
@@ -566,7 +561,7 @@ public class Board extends JPanel {
 
 	public boolean isValidDest(int x, int y, boolean player) {
 		if ((((x) % 20 == 0) || ((y) % 20) == 0) && 20 <= x && x < 400 && 20 <= y && y < 400
-				&& walls[x / 20 - 1][y / 20 - 1]) {
+				&& initial_state[x / 20 - 1][y / 20 - 1] != Field_type.WALL) {
 			if (player && initial_state[x / 20 - 1][y / 20 - 1] == Field_type.GHOST_DOOR) {
 				return false;
 			}
