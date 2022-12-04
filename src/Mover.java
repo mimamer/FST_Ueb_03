@@ -24,33 +24,17 @@ class Mover
     gridSize=20;
     increment = 4;
     max = 400;
-    state = new boolean[19][19];
-    for(int i =0;i<state.length;i++)
-    {
-      for(int j=0;j<state.length;j++)
-      {
-        state[i][j] = false;
-      }
-    }
+    
   }
 
-  /* Updates the state information */
-  public void updateState(boolean[][] state)
-  {
-    for(int i =0;i<state.length;i++)
-    {
-      for(int j=0;j<state.length;j++)
-      {
-        this.state[i][j] = state[i][j];
-      }
-    }
-  }
+
 
   /* Determines if a set of coordinates is a valid destination.*/
 	/* Determines if the location is one where the ghost has to make a decision */
   public boolean isValidDest(int x, int y)
   {
-	  return board.isValidDest(x,y);
+	  boolean player=this.getClass().equals(Player.class);
+	  return board.isValidDest(x,y,player);
     /* The first statements check that the x and y are inbounds.  The last statement checks the map to
        see if it's a valid location */
     

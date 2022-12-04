@@ -11,15 +11,15 @@ import java.io.*;
 
 /*This board class contains the player, ghosts, pellets, and most of the game logic.*/
 public class Board extends JPanel {
-	
-	public enum Field_type{
-		EMPTY, PELLET, WALL
+
+	public enum Field_type {
+		EMPTY, PELLET, WALL, GHOST_DOOR
 	}
-	
+
 	Field_type[][] initial_state;
 	/* Initialize the images */
 	/* For JAR File */
-	
+
 	Image titleScreenImage = Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/titleScreen.jpg"));
 	Image gameOverImage = Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/gameOver.jpg"));
 	Image winScreenImage = Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/winScreen.jpg"));
@@ -86,51 +86,52 @@ public class Board extends JPanel {
 		gridSize = 19;
 		New = 0;
 		titleScreen = true;
-		initial_state=new Field_type[gridSize][gridSize];
+		initial_state = new Field_type[gridSize][gridSize];
 		try {
-			String board_info=Files.readString(Paths.get(getClass().getResource("initial_board.txt").toURI()));
+			String board_info = Files.readString(Paths.get(getClass().getResource("initial_board.txt").toURI()));
 			process_board_info(board_info);
 		} catch (IOException | URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		initialize_pellets_and_state();
-		
-		player=new Player(200, 300,this);
+
+		player = new Player(200, 300, this);
 		initialize_ghost();
 
 	}
 
 	private void initialize_pellets_and_state() {
-		walls=new boolean[gridSize][gridSize];
-		pellets=new boolean[gridSize][gridSize];
-		for(int row=0; row<initial_state.length;row++) {
-			for(int column=0; column<initial_state.length;column++) {
-				pellets[row][column]=initial_state[row][column]==Field_type.PELLET?true:false;
-				walls[row][column]=initial_state[row][column]==Field_type.WALL?false:true;
+		walls = new boolean[gridSize][gridSize];
+		pellets = new boolean[gridSize][gridSize];
+		for (int row = 0; row < initial_state.length; row++) {
+			for (int column = 0; column < initial_state.length; column++) {
+				pellets[row][column] = initial_state[row][column] == Field_type.PELLET ? true : false;
+				walls[row][column] = initial_state[row][column] == Field_type.WALL ? false : true;
 			}
 		}
-		
+
 	}
 
 	private void process_board_info(String board_info) {
-		StringTokenizer st=new StringTokenizer(board_info,"\n");
-		int row=0;
-		while(st.hasMoreTokens()) {
-			String line=st.nextToken();
-			for(int column=0; column<line.length();column++) {
-				char type=line.charAt(column);
-				initial_state[column][row]=type==' '?Field_type.EMPTY:(type=='.'?Field_type.PELLET:Field_type.WALL);
+		StringTokenizer st = new StringTokenizer(board_info, "\n");
+		int row = 0;
+		while (st.hasMoreTokens()) {
+			String line = st.nextToken();
+			for (int column = 0; column < line.length(); column++) {
+				char type = line.charAt(column);
+				initial_state[column][row] = type == ' ' ? Field_type.EMPTY
+						: (type == '.' ? Field_type.PELLET : (type == 'W' ? Field_type.WALL : Field_type.GHOST_DOOR));// todo
 			}
 			row++;
 		}
 	}
 
 	public void initialize_ghost() {
-		ghosts[0] = new Ghost(180, 180, 1,this);
-		ghosts[1] = new Ghost(200, 180, 2,this);
-		ghosts[2] = new Ghost(220, 180, 3,this);
-		ghosts[3] = new Ghost(220, 180, 4,this);
+		ghosts[0] = new Ghost(180, 180, 1, this);
+		ghosts[1] = new Ghost(200, 180, 2, this);
+		ghosts[2] = new Ghost(220, 180, 3, this);
+		ghosts[3] = new Ghost(220, 180, 4, this);
 
 	}
 
@@ -179,7 +180,6 @@ public class Board extends JPanel {
 
 	}
 
-
 	/*
 	 * Draws the appropriate number of lives on the bottom left of the screen. Also
 	 * draws the menu
@@ -220,20 +220,20 @@ public class Board extends JPanel {
 		graphics.setColor(Color.WHITE);
 		graphics.drawRect(19, 19, 382, 382);
 		graphics.setColor(Color.BLUE);
-		
-		int field_size=20; //quadratic
-		int oberer_reiter=20;
-		int seiten_margin=20;
-		for(int column=0; column<initial_state.length;column++) {
-			for(int row=0; row<initial_state.length;row++) {
-				if(initial_state[column][row]==Field_type.WALL) {
-					graphics.fillRect(column*field_size+seiten_margin, row*field_size+oberer_reiter, field_size, field_size);
+
+		int field_size = 20; // quadratic
+		int oberer_reiter = 20;
+		int seiten_margin = 20;
+		for (int column = 0; column < initial_state.length; column++) {
+			for (int row = 0; row < initial_state.length; row++) {
+				if (initial_state[column][row] == Field_type.WALL) {
+					graphics.fillRect(column * field_size + seiten_margin, row * field_size + oberer_reiter, field_size,
+							field_size);
 				}
 			}
 		}
 		drawLives(graphics);
 	}
-
 
 	/* Draws the pellets on the screen */
 	public void drawPellets(Graphics g) {
@@ -255,7 +255,7 @@ public class Board extends JPanel {
 	}
 
 	/* This is the main function that draws one entire frame of the game */
-	
+
 	public void paint(Graphics g) {
 		/*
 		 * If we're playing the dying animation, don't update the entire screen. Just
@@ -366,25 +366,18 @@ public class Board extends JPanel {
 		/* Game initialization */
 		if (New == 1) {
 			reset();
-			player = new Player(200, 300,this);
+			player = new Player(200, 300, this);
 
 			initialize_ghost();
 
 			currScore = 0;
-			
+
 			initialize_pellets_and_state();
 			drawBoard(g);
-			
+
 			drawPellets(g);
 			drawLives(g);
 			/* Send the game map to player and all ghosts */
-			player.updateState(walls);
-			/* Don't let the player go in the ghost box */
-			player.state[9][7] = false;
-
-			for (Ghost ghost : ghosts) {
-				ghost.updateState(walls);
-			}
 
 			/* Draw the top menu bar */
 			g.setColor(Color.YELLOW);
@@ -419,24 +412,22 @@ public class Board extends JPanel {
 
 		/* Drawing optimization */
 		g.copyArea(player.x - 20, player.y - 20, 80, 80, 0, 0);
-		
-		for(Ghost ghost: ghosts) {
+
+		for (Ghost ghost : ghosts) {
 			g.copyArea(ghost.x - 20, ghost.y - 20, 80, 80, 0, 0);
 		}
 
-
 		/* Detect collisions */
-		for(Ghost ghost: ghosts) {
+		for (Ghost ghost : ghosts) {
 			if (player.x == ghost.x && Math.abs(player.y - ghost.y) < 10) {
 				oops = true;
 				break;
 			}
-			if(player.y == ghost.y && Math.abs(player.x - ghost.x) < 10) {
-				oops =true;
+			if (player.y == ghost.y && Math.abs(player.x - ghost.x) < 10) {
+				oops = true;
 				break;
 			}
 		}
-		
 
 		/* Kill the pacman */
 		if (oops && !stopped) {
@@ -461,10 +452,9 @@ public class Board extends JPanel {
 		/* Delete the players and ghosts */
 		g.setColor(Color.BLACK);
 		g.fillRect(player.lastX, player.lastY, 20, 20);
-		for(Ghost ghost: ghosts) {
+		for (Ghost ghost : ghosts) {
 			g.fillRect(ghost.lastX, ghost.lastY, 20, 20);
 		}
-		
 
 		/* Eat pellets */
 		if (pellets[player.pelletX][player.pelletY] && New != 2 && New != 3) {
@@ -515,26 +505,25 @@ public class Board extends JPanel {
 		}
 
 		/* Replace pellets that have been run over by ghosts */
-		for(Ghost ghost:ghosts) {
+		for (Ghost ghost : ghosts) {
 			if (pellets[ghost.lastPelletX][ghost.lastPelletY])
 				fillPellet(ghost.lastPelletX, ghost.lastPelletY, g);
 		}
-		
 
 		/* Draw the ghosts */
 		if (ghosts[0].frameCount < 5) {
 			/* Draw first frame of ghosts */
-			for(Ghost ghost:ghosts) {
+			for (Ghost ghost : ghosts) {
 				g.drawImage(ghost.ghost_right, ghost.x, ghost.y, Color.BLACK, null);
 			}
-			
+
 			ghosts[0].frameCount++;
 		} else {
 			/* Draw second frame of ghosts */
-			for(Ghost ghost:ghosts) {
+			for (Ghost ghost : ghosts) {
 				g.drawImage(ghost.ghost_left, ghost.x, ghost.y, Color.BLACK, null);
 			}
-			
+
 			if (ghosts[0].frameCount >= 10)
 				ghosts[0].frameCount = 0;
 			else
@@ -575,11 +564,15 @@ public class Board extends JPanel {
 
 	}
 
-	public boolean isValidDest(int x, int y) {
-		if ((((x)%20==0) || ((y)%20)==0) && 20<=x && x<400 && 20<= y && y<400 && walls[x/20-1][y/20-1] )
-	    {
-	      return true;
-	    }
-	    return false;
+	public boolean isValidDest(int x, int y, boolean player) {
+		if ((((x) % 20 == 0) || ((y) % 20) == 0) && 20 <= x && x < 400 && 20 <= y && y < 400
+				&& walls[x / 20 - 1][y / 20 - 1]) {
+			if (player && initial_state[x / 20 - 1][y / 20 - 1] == Field_type.GHOST_DOOR) {
+				return false;
+			}
+			// ghost
+			return true;
+		}
+		return false;
 	}
 }
