@@ -38,8 +38,8 @@ class Player extends Mover {
 	boolean stopped = false;
 
 	/* Constructor places pacman in initial location and orientation */
-	public Player(int x, int y) {
-
+	public Player(int x, int y, Board board) {
+		this.board=board;
 		teleport = false;
 		pelletsEaten = 0;
 		pelletX = x / gridSize - 1;

@@ -6,6 +6,7 @@ class Mover
 	/* Current location */
 	int x;
 	int y;
+	Board board;
   /* State contains the game map */
   boolean[][] state;
 
@@ -49,13 +50,10 @@ class Mover
 	/* Determines if the location is one where the ghost has to make a decision */
   public boolean isValidDest(int x, int y)
   {
+	  return board.isValidDest(x,y);
     /* The first statements check that the x and y are inbounds.  The last statement checks the map to
        see if it's a valid location */
-    if ((((x)%20==0) || ((y)%20)==0) && 20<=x && x<400 && 20<= y && y<400 && state[x/20-1][y/20-1] )
-    {
-      return true;
-    }
-    return false;
+    
   } 
 	/*
 	 * This function is used for demoMode. It is copied from the Ghost class. See

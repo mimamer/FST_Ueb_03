@@ -25,7 +25,7 @@ public class Board extends JPanel {
 	Image winScreenImage = Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/winScreen.jpg"));
 
 	/* Initialize the player and ghosts */
-	Player player = new Player(200, 300);
+	Player player;
 	Ghost[] ghosts = new Ghost[4];
 
 	/* Timer is used for playing sound effects and animations */
@@ -95,6 +95,8 @@ public class Board extends JPanel {
 			e.printStackTrace();
 		}
 		initialize_pellets_and_state();
+		
+		player=new Player(200, 300,this);
 		initialize_ghost();
 
 	}
@@ -125,10 +127,10 @@ public class Board extends JPanel {
 	}
 
 	public void initialize_ghost() {
-		ghosts[0] = new Ghost(180, 180, 1);
-		ghosts[1] = new Ghost(200, 180, 2);
-		ghosts[2] = new Ghost(220, 180, 3);
-		ghosts[3] = new Ghost(220, 180, 4);
+		ghosts[0] = new Ghost(180, 180, 1,this);
+		ghosts[1] = new Ghost(200, 180, 2,this);
+		ghosts[2] = new Ghost(220, 180, 3,this);
+		ghosts[3] = new Ghost(220, 180, 4,this);
 
 	}
 
@@ -364,7 +366,7 @@ public class Board extends JPanel {
 		/* Game initialization */
 		if (New == 1) {
 			reset();
-			player = new Player(200, 300);
+			player = new Player(200, 300,this);
 
 			initialize_ghost();
 
@@ -571,5 +573,13 @@ public class Board extends JPanel {
 		g.setColor(Color.WHITE);
 		g.drawRect(19, 19, 382, 382);
 
+	}
+
+	public boolean isValidDest(int x, int y) {
+		if ((((x)%20==0) || ((y)%20)==0) && 20<=x && x<400 && 20<= y && y<400 && walls[x/20-1][y/20-1] )
+	    {
+	      return true;
+	    }
+	    return false;
 	}
 }

@@ -23,7 +23,7 @@ class Ghost extends Mover {
 	int lastPelletX, lastPelletY;
 
 	/* Constructor places ghost and updates states */
-	public Ghost(int x, int y, int photo_id) {
+	public Ghost(int x, int y, int photo_id, Board board) {
 		direction = 'L';
 		pelletX = x / gridSize - 1;
 		pelletY = x / gridSize - 1;
@@ -33,6 +33,7 @@ class Ghost extends Mover {
 		this.lastY = y;
 		this.x = x;
 		this.y = y;
+		this.board=board;
 		//try-catch
 		ghost_right=Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/ghost"+(photo_id)+"0.jpg")); 
 		ghost_left=Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/ghost"+(photo_id)+"1.jpg")); 
@@ -51,8 +52,6 @@ class Ghost extends Mover {
 		}
 
 	}
-
-
 
 	/* Chooses a new direction randomly for the ghost to move */
 	public char newDirection() {
