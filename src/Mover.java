@@ -8,7 +8,6 @@ class Mover
 	int y;
 	Board board;
   /* State contains the game map */
-  boolean[][] state;
 
   /* gridSize is the size of one square in the game.
      max is the height/width of the game.
@@ -26,8 +25,6 @@ class Mover
     max = 400;
     
   }
-
-
 
   /* Determines if a set of coordinates is a valid destination.*/
 	/* Determines if the location is one where the ghost has to make a decision */
