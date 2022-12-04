@@ -94,10 +94,21 @@ public class Board extends JPanel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-
+		initialize_pellets_and_state();
 		initialize_ghost();
 
+	}
+
+	private void initialize_pellets_and_state() {
+		state=new boolean[gridSize][gridSize];
+		pellets=new boolean[gridSize][gridSize];
+		for(int row=0; row<initial_state.length;row++) {
+			for(int column=0; column<initial_state.length;column++) {
+				pellets[row][column]=initial_state[row][column]==Field_type.PELLET?true:false;
+				state[row][column]=initial_state[row][column]==Field_type.WALL?false:true;
+			}
+		}
+		
 	}
 
 	private void process_board_info(String board_info) {
@@ -107,8 +118,9 @@ public class Board extends JPanel {
 			String line=st.nextToken();
 			for(int column=0; column<line.length();column++) {
 				char type=line.charAt(column);
-				initial_state[row][column]=type==' '?Field_type.EMPTY:(type==' '?Field_type.PELLET:Field_type.WALL);
+				initial_state[column][row]=type==' '?Field_type.EMPTY:(type=='.'?Field_type.PELLET:Field_type.WALL);
 			}
+			row++;
 		}
 	}
 
@@ -185,19 +197,6 @@ public class Board extends JPanel {
 
 	}
 
-	/*
-	 * Function is called during drawing of the map. Whenever the a portion of the
-	 * map is covered up with a barrier, the map and pellets arrays are updated
-	 * accordingly to note that those are invalid locations to travel or put pellets
-	 */
-	public void updateMap(int x, int y, int width, int height) {
-		for (int i = x / gridSize; i < x / gridSize + width / gridSize; i++) {
-			for (int j = y / gridSize; j < y / gridSize + height / gridSize; j++) {
-				state[i - 1][j - 1] = false;
-				pellets[i - 1][j - 1] = false;
-			}
-		}
-	}
 
 	/*
 	 * Draws the appropriate number of lives on the bottom left of the screen. Also
@@ -331,6 +330,11 @@ public class Board extends JPanel {
 		graphics.fillRect(120, 320, 20, 60);
 		updateMap(120, 320, 20, 60);
 		drawLives(graphics);
+	}
+
+	private void updateMap(int i, int j, int k, int l) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	/* Draws the pellets on the screen */
@@ -470,6 +474,7 @@ public class Board extends JPanel {
 
 			currScore = 0;
 			
+			initialize_pellets_and_state();
 			drawBoard(g);
 			
 			drawPellets(g);
