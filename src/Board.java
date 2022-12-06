@@ -116,17 +116,12 @@ public class Board extends JPanel {
 		ghosts[3] = new Ghost(220, 180, 3, this);
 	}
 
-	/* Reset occurs on a new game */
 	public void reset() {
 		numLives = 2;
 		initialize_pellets_and_state();
 
 	}
 
-	/*
-	 * Draws the appropriate number of lives on the bottom left of the screen. Also
-	 * draws the menu
-	 */
 	public void drawLives(Graphics g) {
 		g.setColor(Color.BLACK);
 

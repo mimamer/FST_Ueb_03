@@ -44,15 +44,6 @@ class Player extends Mover {
 		desiredDirection = 'L';
 	}
 
-	/*
-	 * This function is used for demoMode. It is copied from the Ghost class. See
-	 * that for comments
-	 */
-
-	/*
-	 * This function is used for demoMode. It is copied from the Ghost class. See
-	 * that for comments
-	 */
 	public void demoMove() {
 		lastX = x;
 		lastY = y;
@@ -89,7 +80,6 @@ class Player extends Mover {
 		frameCount++;
 	}
 
-	/* The move function moves the pacman for one frame in non demo mode */
 	public void move() {
 		lastX = x;
 		lastY = y;
