@@ -14,7 +14,6 @@ public class HighScore {
 		currScore=0;
 	}
 
-	/* Reads the high scores file and saves it */
 	public void initHighScores() {
 		File file = new File("highScores.txt");
 		Scanner sc;
@@ -26,7 +25,6 @@ public class HighScore {
 		}
 	}
 
-	/* Writes the new high score to a file and sets flag to update it on screen */
 	public void updateScore(int score) {
 		PrintWriter out;
 		try {
@@ -39,14 +37,12 @@ public class HighScore {
 		clearHighScores = true;
 	}
 
-	/* Wipes the high scores file and sets flag to update it on screen */
 	public void clearHighScores() {
 		updateScore(0);
 	}
 
 	void setCurrScore(int i) {
 		currScore=i;
-		
 	}
 
 }

@@ -36,13 +36,8 @@ public class Board extends JPanel {
 	 * pacman is in the process of dying
 	 */
 	int dying = 0;
-
+	GameSounds sounds;
 	HighScore highscore;
-
-	/*
-	 * if the high scores have been cleared, we have to update the top of the screen
-	 * to reflect that
-	 */
 
 	int numLives = 2;
 
@@ -60,9 +55,6 @@ public class Board extends JPanel {
 	boolean overScreen = false;
 	boolean demo = false;
 	int New;
-
-	/* Used to call sound effects */
-	GameSounds sounds;
 
 	int lastPelletEatenX = 0;
 	int lastPelletEatenY = 0;
@@ -101,7 +93,6 @@ public class Board extends JPanel {
 				pellets[row][column] = initial_state[row][column] == Field_type.PELLET ? true : false;
 			}
 		}
-
 	}
 
 	private void process_board_info(String board_info) {

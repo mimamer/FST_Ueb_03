@@ -21,10 +21,6 @@ class Player extends Mover {
 	/* Keeps track of pellets eaten to determine end of game */
 	int pelletsEaten;
 
-	/* Last location */
-	int lastX;
-	int lastY;
-
 	/* Which pellet the pacman is on top of */
 	int pelletX;
 	int pelletY;
@@ -105,24 +101,7 @@ class Player extends Mover {
 				(desiredDirection == 'L' && currDirection == 'R') || (desiredDirection == 'R' && currDirection == 'L')
 				|| (desiredDirection == 'U' && currDirection == 'D')
 				|| (desiredDirection == 'D' && currDirection == 'U')) {
-			switch (desiredDirection) {
-			case 'L':
-				if (isValidDest(x - increment, y))
-					x -= increment;
-				break;
-			case 'R':
-				if (isValidDest(x + gridSize, y))
-					x += increment;
-				break;
-			case 'U':
-				if (isValidDest(x, y - increment))
-					y -= increment;
-				break;
-			case 'D':
-				if (isValidDest(x, y + gridSize))
-					y += increment;
-				break;
-			}
+			move_coordinates(desiredDirection);
 		}
 		/*
 		 * If we haven't moved, then move in the direction the pacman was headed anyway
