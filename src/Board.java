@@ -95,6 +95,13 @@ public class Board extends JPanel {
 		}
 	}
 
+	public void initialize_ghost() {
+		ghosts[0] = new Ghost(180, 180, 0, this);
+		ghosts[1] = new Ghost(200, 180, 1, this);
+		ghosts[2] = new Ghost(220, 180, 2, this);
+		ghosts[3] = new Ghost(220, 180, 3, this);
+	}
+
 	private void process_board_info(String board_info) {
 		StringTokenizer st = new StringTokenizer(board_info, "\n");
 		int row = 0;
@@ -109,19 +116,18 @@ public class Board extends JPanel {
 		}
 	}
 
-	public void initialize_ghost() {
-		ghosts[0] = new Ghost(180, 180, 0, this);
-		ghosts[1] = new Ghost(200, 180, 1, this);
-		ghosts[2] = new Ghost(220, 180, 2, this);
-		ghosts[3] = new Ghost(220, 180, 3, this);
-	}
-
 	public void reset() {
 		numLives = 2;
 		initialize_pellets_and_state();
 
 	}
 
+	public void drawBoard(Graphics graphics) {
+		drawMargins(graphics);
+		drawWalls(graphics);
+		drawLives(graphics);
+	}
+	
 	public void drawLives(Graphics g) {
 		g.setColor(Color.BLACK);
 
@@ -138,12 +144,6 @@ public class Board extends JPanel {
 		g.drawString("Reset", 100, max + 5 + board_Size);
 		g.drawString("Clear High Scores", 180, max + 5 + board_Size);
 		g.drawString("Exit", 350, max + 5 + board_Size);
-	}
-
-	public void drawBoard(Graphics graphics) {
-		drawMargins(graphics);
-		drawWalls(graphics);
-		drawLives(graphics);
 	}
 
 	private void drawMargins(Graphics graphics) {
@@ -185,9 +185,6 @@ public class Board extends JPanel {
 		}
 	}
 
-	/*
-	 * Draws one individual pellet. Used to redraw pellets that ghosts have run over
-	 */
 	public void fillPellet(int x, int y, Graphics g) {
 		g.setColor(Color.YELLOW);
 		g.fillOval(x * 20 + 28, y * 20 + 28, 4, 4);
@@ -499,5 +496,23 @@ public class Board extends JPanel {
 			return true;
 		}
 		return false;
+	}
+
+	public void move_all_to_starting_position() {
+		player.currDirection = 'L';
+		player.direction = 'L';
+		player.desiredDirection = 'L';
+		player.x = 200;
+		player.y = 300;
+
+		ghosts[0].x = 180;
+		ghosts[0].y = 180;
+		ghosts[1].x = 200;
+		ghosts[1].y = 180;
+		ghosts[2].x = 220;
+		ghosts[2].y = 180;
+		ghosts[3].x = 220;
+		ghosts[3].y = 180;
+		
 	}
 }

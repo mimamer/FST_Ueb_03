@@ -18,7 +18,6 @@ class Player extends Mover {
 	char currDirection;
 	char desiredDirection;
 
-	/* Keeps track of pellets eaten to determine end of game */
 	int pelletsEaten;
 
 	/* Which pellet the pacman is on top of */
@@ -50,32 +49,7 @@ class Player extends Mover {
 		if (isChoiceDest()) {
 			direction = newDirection();
 		}
-		switch (direction) {
-		case 'L':
-			if (isValidDest(x - increment, y)) {
-				x -= increment;
-			} else if (y == 9 * gridSize && x < 2 * gridSize) {
-				x = max - gridSize * 1;
-				teleport = true;
-			}
-			break;
-		case 'R':
-			if (isValidDest(x + gridSize, y)) {
-				x += increment;
-			} else if (y == 9 * gridSize && x > max - gridSize * 2) {
-				x = 1 * gridSize;
-				teleport = true;
-			}
-			break;
-		case 'U':
-			if (isValidDest(x, y - increment))
-				y -= increment;
-			break;
-		case 'D':
-			if (isValidDest(x, y + gridSize))
-				y += increment;
-			break;
-		}
+		player_move_coordinates(direction);
 		currDirection = direction;
 		frameCount++;
 	}
@@ -97,32 +71,7 @@ class Player extends Mover {
 		 * If we haven't moved, then move in the direction the pacman was headed anyway
 		 */
 		if (lastX == x && lastY == y) {
-			switch (currDirection) {
-			case 'L':
-				if (isValidDest(x - increment, y))
-					x -= increment;
-				else if (y == 9 * gridSize && x < 2 * gridSize) {
-					x = max - gridSize * 1;
-					teleport = true;
-				}
-				break;
-			case 'R':
-				if (isValidDest(x + gridSize, y))
-					x += increment;
-				else if (y == 9 * gridSize && x > max - gridSize * 2) {
-					x = 1 * gridSize;
-					teleport = true;
-				}
-				break;
-			case 'U':
-				if (isValidDest(x, y - increment))
-					y -= increment;
-				break;
-			case 'D':
-				if (isValidDest(x, y + gridSize))
-					y += increment;
-				break;
-			}
+			player_move_coordinates(currDirection);
 		}
 
 		/* If we did change direction, update currDirection to reflect that */
@@ -141,6 +90,35 @@ class Player extends Mover {
 		else {
 			stopped = false;
 			frameCount++;
+		}
+	}
+
+	private void player_move_coordinates(char currDir) {
+		switch (currDir) {
+		case 'L':
+			if (isValidDest(x - increment, y))
+				x -= increment;
+			else if (y == 9 * gridSize && x < 2 * gridSize) {
+				x = max - gridSize * 1;
+				teleport = true;
+			}
+			break;
+		case 'R':
+			if (isValidDest(x + gridSize, y))
+				x += increment;
+			else if (y == 9 * gridSize && x > max - gridSize * 2) {
+				x = 1 * gridSize;
+				teleport = true;
+			}
+			break;
+		case 'U':
+			if (isValidDest(x, y - increment))
+				y -= increment;
+			break;
+		case 'D':
+			if (isValidDest(x, y + gridSize))
+				y += increment;
+			break;
 		}
 	}
 

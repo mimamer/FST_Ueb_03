@@ -21,25 +21,19 @@ public class Pacman implements MouseListener, KeyListener {
 	/* This timer is used to do request new frames be drawn */
 	javax.swing.Timer frameTimer;
 
-	/* This constructor creates the entire game essentially */
 	public Pacman() {
-		board.requestFocus();
-
-		/* Create and set up window frame */
+		
 		JFrame frame = new JFrame();
 		frame.setSize(420, 460);
-
-		/* Add the board to the frame */
 		frame.add(board, BorderLayout.CENTER);
-
-		/* Set listeners for mouse actions and button clicks */
-		board.addMouseListener(this);
-		board.addKeyListener(this);
-
-		/* Make frame visible, disable resizing */
 		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		frame.setResizable(false);
+
+		/* Set listeners for mouse actions and button clicks */
+		board.requestFocus();
+		board.addMouseListener(this);
+		board.addKeyListener(this);
 
 		/* Set the New flag to 1 because this is a new game */
 		board.New = 1;
@@ -185,20 +179,7 @@ public class Pacman implements MouseListener, KeyListener {
 			}
 
 			/* Move all game elements back to starting positions and orientations */
-			board.player.currDirection = 'L';
-			board.player.direction = 'L';
-			board.player.desiredDirection = 'L';
-			board.player.x = 200;
-			board.player.y = 300;
-
-			board.ghosts[0].x = 180;
-			board.ghosts[0].y = 180;
-			board.ghosts[1].x = 200;
-			board.ghosts[1].y = 180;
-			board.ghosts[2].x = 220;
-			board.ghosts[2].y = 180;
-			board.ghosts[3].x = 220;
-			board.ghosts[3].y = 180;
+			board.move_all_to_starting_position();
 
 			/* Advance a frame to display main state */
 			board.repaint(0, 0, 600, 600);

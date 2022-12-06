@@ -1,30 +1,6 @@
-Found a 19 line (76 tokens) duplication in the following files: 
-Starting at line 57 of /home/michelle/Nextcloud/Uni/FortgeschritteneSoftwaretechnik/workspace/javapacman/src/Ghost.java
-Starting at line 108 of /home/michelle/Nextcloud/Uni/FortgeschritteneSoftwaretechnik/workspace/javapacman/src/Player.java
-
-		switch (direction) {
-		case 'L':
-			if (isValidDest(x - increment, y))
-				x -= increment;
-			break;
-		case 'R':
-			if (isValidDest(x + gridSize, y))
-				x += increment;
-			break;
-		case 'U':
-			if (isValidDest(x, y - increment))
-				y -= increment;
-			break;
-		case 'D':
-			if (isValidDest(x, y + gridSize))
-				y += increment;
-			break;
-		}
-	}
-=====================================================================
 Found a 14 line (65 tokens) duplication in the following files: 
-Starting at line 78 of /home/michelle/Nextcloud/Uni/FortgeschritteneSoftwaretechnik/workspace/javapacman/src/Player.java
-Starting at line 143 of /home/michelle/Nextcloud/Uni/FortgeschritteneSoftwaretechnik/workspace/javapacman/src/Player.java
+Starting at line 65 of /home/michelle/Nextcloud/Uni/FortgeschritteneSoftwaretechnik/workspace/javapacman/src/Player.java
+Starting at line 112 of /home/michelle/Nextcloud/Uni/FortgeschritteneSoftwaretechnik/workspace/javapacman/src/Player.java
 
 			} else if (y == 9 * gridSize && x > max - gridSize * 2) {
 				x = 1 * gridSize;
@@ -42,8 +18,8 @@ Starting at line 143 of /home/michelle/Nextcloud/Uni/FortgeschritteneSoftwaretec
 		}
 =====================================================================
 Found a 7 line (42 tokens) duplication in the following files: 
-Starting at line 70 of /home/michelle/Nextcloud/Uni/FortgeschritteneSoftwaretechnik/workspace/javapacman/src/Player.java
-Starting at line 135 of /home/michelle/Nextcloud/Uni/FortgeschritteneSoftwaretechnik/workspace/javapacman/src/Player.java
+Starting at line 57 of /home/michelle/Nextcloud/Uni/FortgeschritteneSoftwaretechnik/workspace/javapacman/src/Player.java
+Starting at line 104 of /home/michelle/Nextcloud/Uni/FortgeschritteneSoftwaretechnik/workspace/javapacman/src/Player.java
 
 			} else if (y == 9 * gridSize && x < 2 * gridSize) {
 				x = max - gridSize * 1;
@@ -53,28 +29,9 @@ Starting at line 135 of /home/michelle/Nextcloud/Uni/FortgeschritteneSoftwaretec
 		case 'R':
 			if (isValidDest(x + gridSize, y)) {
 =====================================================================
-Found a 13 line (41 tokens) duplication in the following files: 
-Starting at line 47 of /home/michelle/Nextcloud/Uni/FortgeschritteneSoftwaretechnik/workspace/javapacman/src/Ghost.java
-Starting at line 60 of /home/michelle/Nextcloud/Uni/FortgeschritteneSoftwaretechnik/workspace/javapacman/src/Player.java
-
-	public void move() {
-		lastX = x;
-		lastY = y;
-
-		/* If we can make a decision, pick a new direction randomly */
-		if (isChoiceDest()) {
-			direction = newDirection();
-		}
-
-		/* If that direction is valid, move that way */
-		switch (direction) {
-		case 'L':
-			if (isValidDest(x - increment, y))
-=====================================================================
 Found a 11 line (39 tokens) duplication in the following files: 
-Starting at line 65 of /home/michelle/Nextcloud/Uni/FortgeschritteneSoftwaretechnik/workspace/javapacman/src/Ghost.java
+Starting at line 114 of /home/michelle/Nextcloud/Uni/FortgeschritteneSoftwaretechnik/workspace/javapacman/src/Mover.java
 Starting at line 116 of /home/michelle/Nextcloud/Uni/FortgeschritteneSoftwaretechnik/workspace/javapacman/src/Player.java
-Starting at line 147 of /home/michelle/Nextcloud/Uni/FortgeschritteneSoftwaretechnik/workspace/javapacman/src/Player.java
 
 			break;
 		case 'U':
@@ -89,9 +46,8 @@ Starting at line 147 of /home/michelle/Nextcloud/Uni/FortgeschritteneSoftwaretec
 	}
 =====================================================================
 Found a 10 line (38 tokens) duplication in the following files: 
-Starting at line 65 of /home/michelle/Nextcloud/Uni/FortgeschritteneSoftwaretechnik/workspace/javapacman/src/Ghost.java
-Starting at line 82 of /home/michelle/Nextcloud/Uni/FortgeschritteneSoftwaretechnik/workspace/javapacman/src/Player.java
-Starting at line 116 of /home/michelle/Nextcloud/Uni/FortgeschritteneSoftwaretechnik/workspace/javapacman/src/Player.java
+Starting at line 114 of /home/michelle/Nextcloud/Uni/FortgeschritteneSoftwaretechnik/workspace/javapacman/src/Mover.java
+Starting at line 69 of /home/michelle/Nextcloud/Uni/FortgeschritteneSoftwaretechnik/workspace/javapacman/src/Player.java
 
 			break;
 		case 'U':
@@ -103,3 +59,10 @@ Starting at line 116 of /home/michelle/Nextcloud/Uni/FortgeschritteneSoftwaretec
 				y += increment;
 			break;
 		}
+=====================================================================
+Found a 2 line (25 tokens) duplication in the following files: 
+Starting at line 26 of /home/michelle/Nextcloud/Uni/FortgeschritteneSoftwaretechnik/workspace/javapacman/src/Ghost.java
+Starting at line 28 of /home/michelle/Nextcloud/Uni/FortgeschritteneSoftwaretechnik/workspace/javapacman/src/Ghost.java
+
+		ghost_right = Toolkit.getDefaultToolkit()
+				.getImage(Pacman.class.getResource("img/ghost" + (photo_id % 4 + 1) + "0.jpg"));
