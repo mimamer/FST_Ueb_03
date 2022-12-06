@@ -73,9 +73,7 @@ public class Board extends JPanel {
 	/* Constructor initializes state flags etc. */
 	public Board() {
 		highscore = new HighScore();
-		highscore.initHighScores();
 		sounds = new GameSounds();
-		highscore.currScore = 0;
 		stopped = false;
 		max = 400;
 		board_Size = 19;
@@ -121,10 +119,10 @@ public class Board extends JPanel {
 	}
 
 	public void initialize_ghost() {
-		ghosts[0] = new Ghost(180, 180, 1, this);
-		ghosts[1] = new Ghost(200, 180, 2, this);
-		ghosts[2] = new Ghost(220, 180, 3, this);
-		ghosts[3] = new Ghost(220, 180, 4, this);
+		ghosts[0] = new Ghost(180, 180, 0, this);
+		ghosts[1] = new Ghost(200, 180, 1, this);
+		ghosts[2] = new Ghost(220, 180, 2, this);
+		ghosts[3] = new Ghost(220, 180, 3, this);
 	}
 
 	/* Reset occurs on a new game */
@@ -247,16 +245,12 @@ public class Board extends JPanel {
 
 			initialize_ghost();
 
-			highscore.currScore = 0;
+			highscore.setCurrScore(0);
 
 			initialize_pellets_and_state();
 			drawBoard(graphics);
-
 			drawPellets(graphics);
 			drawLives(graphics);
-			/* Send the game map to player and all ghosts */
-
-			/* Draw the top menu bar */
 			draw_header(graphics);
 			New++;
 		}

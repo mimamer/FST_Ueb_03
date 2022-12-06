@@ -23,10 +23,11 @@ class Ghost extends Mover {
 		lastPelletX = pelletX;
 		lastPelletY = pelletY;
 
-		// try-catch
 		ghost_right = Toolkit.getDefaultToolkit()
-				.getImage(Pacman.class.getResource("img/ghost" + (photo_id) + "0.jpg"));
-		ghost_left = Toolkit.getDefaultToolkit().getImage(Pacman.class.getResource("img/ghost" + (photo_id) + "1.jpg"));
+				.getImage(Pacman.class.getResource("img/ghost" + (photo_id % 4 + 1) + "0.jpg"));
+		ghost_left = Toolkit.getDefaultToolkit()
+				.getImage(Pacman.class.getResource("img/ghost" + (photo_id % 4 + 1) + "1.jpg"));
+
 	}
 
 	/* update pellet status */

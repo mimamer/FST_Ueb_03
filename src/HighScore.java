@@ -6,7 +6,13 @@ public class HighScore {
 	/* Score information */
 	int currScore;
 	int highScore;
-	boolean clearHighScores = false;
+	boolean clearHighScores;
+	
+	public HighScore() {
+		clearHighScores= false;
+		initHighScores();
+		currScore=0;
+	}
 
 	/* Reads the high scores file and saves it */
 	public void initHighScores() {
@@ -36,6 +42,11 @@ public class HighScore {
 	/* Wipes the high scores file and sets flag to update it on screen */
 	public void clearHighScores() {
 		updateScore(0);
+	}
+
+	void setCurrScore(int i) {
+		currScore=i;
+		
 	}
 
 }
