@@ -379,10 +379,6 @@ public class Board extends JPanel {
 			}
 		}
 
-		/*
-		 * Draw the border around the game in case it was overwritten by ghost movement
-		 * or something
-		 */
 		graphics.setColor(Color.WHITE);
 		graphics.drawRect(19, 19, 382, 382);
 
